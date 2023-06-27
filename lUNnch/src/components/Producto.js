@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, FlatList, TouchableOpacity, ScrollView, Button, Image} from 'react-native';
+import { StyleSheet, View, Text, FlatList, TouchableOpacity, ScrollView, Button, Image } from 'react-native';
 
 class Producto extends React.Component {
   constructor(props) {
@@ -22,7 +22,7 @@ class Producto extends React.Component {
 
     const { token } = this.props.route.params;
 
-    fetch(this.state.url,{
+    fetch(this.state.url, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -51,37 +51,32 @@ class Producto extends React.Component {
         <ScrollView contentContainerStyle={styles.scrollViewContent}>
           <View style={styles.mainView}>
             {this.state.productos.map((producto) => (
-              <View key={producto.id} style={styles.mainView}>
-                <Text>{producto.name}</Text>
+              <View key={producto.id} style={styles.productoContainer}>
+                <Text style={styles.productoName}>{producto.name}</Text>
                 <Image
-                  style={{
-                    width: 100,
-                    height: 150,
-                  }}
-                  source={{
-                    uri: producto.image,
-                  }}
+                  style={styles.productoImage}
+                  source={{ uri: producto.image }}
                 />
                 <Button
                   title="Más detalles"
                   onPress={() => {
-                    this.props.navigation.navigate('Producto', {       
+                    this.props.navigation.navigate('Producto', {
                       id: producto.id,
                       name: producto.name,
                       price: producto.price,
                       quantity: producto.quantity,
                       image: producto.image,
-                      id_seller: producto.id_seller, });
+                      id_seller: producto.id_seller,
+                    });
                   }}
                 />
                 <Text>{'\n'}</Text>
               </View>
-
             ))}
-
           </View>
         </ScrollView>
       </View>
+
 
     );
   }
@@ -91,14 +86,33 @@ export default Producto;
 
 const styles = StyleSheet.create({
   container: {
-      flex: 1,
+    flex: 1,
+    backgroundColor: '#f5f5f5',
   },
   scrollViewContent: {
-      flexGrow: 1,
+    flexGrow: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   mainView: {
-      flex: 1,
-      alignItems: "center",
-      justifyContent: "center",
-  }
+    paddingVertical: 20,
+  },
+  productoContainer: {
+    backgroundColor: '#ffffff',
+    borderRadius: 10,
+    padding: 20,
+    marginBottom: 20,
+    alignItems: 'center',
+  },
+  productoName: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  productoImage: {
+    width: 100,
+    height: 150,
+    marginBottom: 10,
+  },
 });
+
