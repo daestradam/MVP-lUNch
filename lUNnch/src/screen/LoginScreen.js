@@ -28,7 +28,7 @@ const LoginScreen = () => {
         // Verifica si la autenticación fue exitosa
         if (data.access_token) {
           // Autenticación exitosa
-          navigation.navigate('Productos');
+          navigation.navigate('Productos', { token: data.access_token });
         } else {
           // Autenticación fallida
           alert('Nombre de usuario o contraseña incorrectos');

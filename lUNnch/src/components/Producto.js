@@ -9,6 +9,7 @@ class Producto extends React.Component {
       loading: false,
       productos: [],
       url: 'http://127.0.0.1:8000/api/products',
+      token: '',
     };
   }
 
@@ -19,7 +20,13 @@ class Producto extends React.Component {
   getProducto = () => {
     this.setState({ loading: true });
 
-    fetch(this.state.url)
+    const { token } = this.props.route.params;
+
+    fetch(this.state.url,{
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
       .then(res => res.json())
       .then(res => {
         this.setState({
