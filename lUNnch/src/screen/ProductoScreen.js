@@ -1,16 +1,20 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
 
-const ProductScreen = ({ navigation, route }) => {
-  const { cantidad, nombre, imagen, precio, idSeller } = route.params;
+const ProductoScreen = ({ route }) => {
+  console.log(route.params)
+  const { id, name, price, quantity, image, id_seller } = route.params;
+
+  console.log(name); // Debería mostrar "Papas de limón"
+  
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{nombre}</Text>
-      <Image source={{ uri: imagen }} style={styles.image} />
-      <Text style={styles.text}>Cantidad: {cantidad}</Text>
-      <Text style={styles.text}>Precio: {precio}</Text>
-      <Text style={styles.text}>ID del vendedor: {idSeller}</Text>
+      <Text style={styles.title}>{name}</Text>
+      <Image source={{ uri: image }} style={styles.image} />
+      <Text style={styles.text}>Cantidad: {quantity}</Text>
+      <Text style={styles.text}>Precio: {price}</Text>
+      <Text style={styles.text}>ID del vendedor: {id_seller}</Text>
     </View>
   );
 };
@@ -37,4 +41,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProductScreen;
+export default ProductoScreen;

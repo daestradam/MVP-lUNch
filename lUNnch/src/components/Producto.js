@@ -8,7 +8,7 @@ class Producto extends React.Component {
     this.state = {
       loading: false,
       productos: [],
-      url: 'https://pokeapi.co/api/v2/pokemon/',
+      url: 'http://127.0.0.1:8000/api/products',
     };
   }
 
@@ -23,7 +23,7 @@ class Producto extends React.Component {
       .then(res => res.json())
       .then(res => {
         this.setState({
-          productos: res.results,
+          productos: res.data,
           url: res.next,
           loading: false,
         });
@@ -45,20 +45,26 @@ class Producto extends React.Component {
           <View style={styles.mainView}>
             {this.state.productos.map((producto) => (
               <View key={producto.id} style={styles.mainView}>
-                <Text>El producto es: {producto.name}</Text>
+                <Text>{producto.name}</Text>
                 <Image
                   style={{
                     width: 100,
                     height: 150,
                   }}
                   source={{
-                    uri: producto.url,
+                    uri: producto.image,
                   }}
                 />
                 <Button
                   title="Más detalles"
                   onPress={() => {
-                    this.props.navigation.navigate('ProductoScreen', { producto });
+                    this.props.navigation.navigate('Producto', {       
+                      id: producto.id,
+                      name: producto.name,
+                      price: producto.price,
+                      quantity: producto.quantity,
+                      image: producto.image,
+                      id_seller: producto.id_seller, });
                   }}
                 />
                 <Text>{'\n'}</Text>

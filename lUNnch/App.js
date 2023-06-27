@@ -18,7 +18,7 @@ export default function App() {
           }
         }>
         <Stack.Screen name="Productos" component={Producto} />
-        <Stack.Screen name="ProductoScreen" component={ProductoScreen} />
+        <Stack.Screen name="Producto" component={ProductoScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
