@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, FlatList, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, FlatList, TouchableOpacity, ScrollView, Button, Image} from 'react-native';
 
 class Producto extends React.Component {
   constructor(props) {
@@ -7,7 +7,7 @@ class Producto extends React.Component {
 
     this.state = {
       loading: false,
-      producto: [],
+      productos: [],
       url: 'https://pokeapi.co/api/v2/pokemon/',
     };
   }
@@ -23,15 +23,11 @@ class Producto extends React.Component {
       .then(res => res.json())
       .then(res => {
         this.setState({
-          producto: res.results,
+          productos: res.results,
           url: res.next,
           loading: false,
         });
       });
-  };
-
-  navigateToProductoScreen = (producto) => {
-    this.props.navigation.navigate('ProductoScreen', { producto });
   };
 
   render() {
@@ -44,17 +40,36 @@ class Producto extends React.Component {
     }
 
     return (
-      <View style={{ flex: 1, paddingTop: 50, paddingLeft: 5 }}>
-        <FlatList
-          data={this.state.producto}
-          renderItem={({ item }) => (
-            <TouchableOpacity onPress={() => this.navigateToProductoScreen(item)}>
-              <Text>{item.name}</Text>
-            </TouchableOpacity>
-          )}
-          keyExtractor={(item, index) => index.toString()}
-        />
+      <View style={styles.container}>
+        <ScrollView contentContainerStyle={styles.scrollViewContent}>
+          <View style={styles.mainView}>
+            {this.state.productos.map((producto) => (
+              <View key={producto.id} style={styles.mainView}>
+                <Text>El producto es: {producto.name}</Text>
+                <Image
+                  style={{
+                    width: 100,
+                    height: 150,
+                  }}
+                  source={{
+                    uri: producto.url,
+                  }}
+                />
+                <Button
+                  title="Más detalles"
+                  onPress={() => {
+                    this.props.navigation.navigate('ProductoScreen', { producto });
+                  }}
+                />
+                <Text>{'\n'}</Text>
+              </View>
+
+            ))}
+
+          </View>
+        </ScrollView>
       </View>
+
     );
   }
 }
@@ -63,9 +78,14 @@ export default Producto;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+      flex: 1,
   },
+  scrollViewContent: {
+      flexGrow: 1,
+  },
+  mainView: {
+      flex: 1,
+      alignItems: "center",
+      justifyContent: "center",
+  }
 });

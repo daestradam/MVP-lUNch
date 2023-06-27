@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
 
-const ProductScreen = ({ route }) => {
+const ProductScreen = ({ navigation, route }) => {
   const { cantidad, nombre, imagen, precio, idSeller } = route.params;
 
   return (
